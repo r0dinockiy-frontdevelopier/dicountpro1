@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1 class="hero-title">Управляйте скидками эффективно</h1>
+                    <p class="hero-subtitle">Автоматизированная система управления дисконтными программами для роста прибыли вашего предприятия</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'contact' %}" class="btn btn-primary">Начать работу →</a>
+                        <a href="{% url 'about' %}" class="btn btn-secondary">Узнать больше</a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">5000+</span>
+                            <span class="stat-text">клиентов</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-text">довольных</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-text">поддержка</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    {% load static %}
+                    <img src="{% static 'DiscPro/images/dashboard-prewiew.png' %}" alt="Панель управления">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

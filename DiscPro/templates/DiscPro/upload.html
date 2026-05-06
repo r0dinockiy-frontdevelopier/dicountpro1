@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main style="padding-top: 100px;">
+    <div class="container">
+        <h1>Загрузка файлов</h1>
+        <p style="margin-bottom: 30px; color: #666;">Загружайте изображения и другие файлы на сервер</p>
+        
+        <!-- Форма загрузки -->
+        <div style="background: #f8fafc; border-radius: 16px; padding: 30px; margin-bottom: 40px;">
+            <h3 style="margin-bottom: 20px;">Выберите файл для загрузки</h3>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Загрузить</button>
+            </form>
+            
+            {% if uploaded_file %}
+                <p style="color: green; margin-top: 15px;">✓ Файл "{{ uploaded_file }}" успешно загружен!</p>
+            {% endif %}
+        </div>
+        
+        <!-- Список загруженных файлов -->
+        <h3>Загруженные файлы</h3>
+        {% if files %}
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                {% for file in files %}
+                    <div style="border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; background: white;">
+                        <div style="font-weight: 600; margin-bottom: 10px; word-break: break-all;">
+                            📄 {{ file.file.name }}
+                        </div>
+                        <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 10px;">
+                            📅 {{ file.upload_date|date:"d.m.Y H:i" }}
+                        </div>
+                        <a href="{{ file.file.url }}" target="_blank" class="btn btn-small" style="background: #2563eb; color: white;">Скачать</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="color: #64748b; margin-top: 20px;">Нет загруженных файлов.</p>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

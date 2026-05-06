@@ -1,0 +1,284 @@
+{% extends 'base.html' %} {% block content %}
+<main style="padding-top: 100px">
+  <div class="container">
+    <h1 style="margin-bottom: 10px">Дисконтные программы</h1>
+    <p style="margin-bottom: 30px; color: #666">
+      Актуальные скидки и специальные предложения
+    </p>
+
+    <!-- Категории -->
+    <div style="margin-bottom: 25px">
+      <div style="font-weight: 600; margin-bottom: 10px">Категории:</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <a
+          href="{% url 'discount_list' %}"
+          style="padding: 8px 20px; background: {% if not current_category and not current_tag %}#2563eb{% else %}#f0f0f0{% endif %}; color: {% if not current_category and not current_tag %}white{% else %}#333{% endif %}; text-decoration: none; border-radius: 25px;"
+          >Все</a
+        >
+        {% for cat in categories %}
+        <a
+          href="{% if current_tag %}{% url 'category_tag_discounts' cat.slug current_tag.slug %}{% else %}{% url 'category_discounts' cat.slug %}{% endif %}"
+          style="padding: 8px 20px; background: {% if current_category and current_category.id == cat.id %}#2563eb{% else %}#f0f0f0{% endif %}; color: {% if current_category and current_category.id == cat.id %}white{% else %}#333{% endif %}; text-decoration: none; border-radius: 25px;"
+          >{{ cat.name }}</a
+        >
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Теги -->
+    <div style="margin-bottom: 40px">
+      <div style="font-weight: 600; margin-bottom: 10px">Теги:</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        {% for tag in tags %}
+        <a
+          href="{% if current_category %}{% url 'category_tag_discounts' current_category.slug tag.slug %}{% else %}{% url 'tag_discounts' tag.slug %}{% endif %}"
+          style="padding: 6px 15px; background: {% if current_tag and current_tag.id == tag.id %}#2563eb{% else %}#e2e8f0{% endif %}; color: {% if current_tag and current_tag.id == tag.id %}white{% else %}#555{% endif %}; text-decoration: none; border-radius: 20px; font-size: 0.85rem;"
+          >#{{ tag.tag }}</a
+        >
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Активные фильтры -->
+    {% if current_category or current_tag %}
+    <div
+      style="
+        margin-bottom: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      "
+    >
+      <span style="font-weight: 500; color: #475569">Фильтры:</span>
+      {% if current_category %}
+      <span
+        style="
+          background: #2563eb;
+          color: white;
+          padding: 6px 14px;
+          border-radius: 25px;
+          font-size: 0.85rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        "
+      >
+        {{ current_category.name }}
+        <a
+          href="{% if current_tag %}{% url 'tag_discounts' current_tag.slug %}{% else %}{% url 'discount_list' %}{% endif %}"
+          style="
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+          "
+          >✕</a
+        >
+      </span>
+      {% endif %} {% if current_tag %}
+      <span
+        style="
+          background: #2563eb;
+          color: white;
+          padding: 6px 14px;
+          border-radius: 25px;
+          font-size: 0.85rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        "
+      >
+        #{{ current_tag.tag }}
+        <a
+          href="{% if current_category %}{% url 'category_discounts' current_category.slug %}{% else %}{% url 'discount_list' %}{% endif %}"
+          style="
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+          "
+          >✕</a
+        >
+      </span>
+      {% endif %}
+      <a
+        href="{% url 'discount_list' %}"
+        style="
+          padding: 6px 18px;
+          background: #ef4444;
+          color: white;
+          text-decoration: none;
+          border-radius: 25px;
+          font-size: 0.85rem;
+          transition: all 0.3s;
+        "
+        onmouseover="this.style.background = '#dc2626'"
+        onmouseout="this.style.background = '#ef4444'"
+        >✕ Сбросить все</a
+      >
+    </div>
+    {% endif %}
+
+    <!-- Результаты -->
+    <div style="margin-bottom: 20px">
+      <span style="font-weight: 600"
+        >Найдено: {{ posts|length }} дисконтов</span
+      >
+    </div>
+
+    <!-- Сетка карточек -->
+    <div
+      style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px"
+    >
+      {% for discount in posts %}
+      <div
+        style="
+          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          padding: 20px;
+          position: relative;
+          background: white;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        "
+      >
+        {% if discount.photo %}
+        <div style="margin-bottom: 10px">
+          <img
+            src="{{ discount.photo.url }}"
+            alt="{{ discount.title }}"
+            style="
+              width: 100%;
+              height: 150px;
+              object-fit: cover;
+              border-radius: 8px;
+            "
+          />
+        </div>
+        {% endif %}
+
+        <div style="position: absolute; top: 15px; right: 15px">
+          <span
+            style="
+              background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+              color: white;
+              padding: 5px 12px;
+              border-radius: 20px;
+              font-weight: bold;
+              font-size: 0.9rem;
+            "
+            >-{{ discount.discount_percent }}%</span
+          >
+        </div>
+
+        <h3 style="font-size: 1.2rem; margin: 10px 0 10px; padding-right: 60px">
+          {{ discount.title }}
+        </h3>
+
+        {% if discount.cat %}
+        <a
+          href="{% url 'category_discounts' discount.cat.slug %}"
+          style="
+            display: inline-block;
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+          "
+          onmouseover="
+            this.style.background = '#2563eb';
+            this.style.color = 'white';
+          "
+          onmouseout="
+            this.style.background = '#dbeafe';
+            this.style.color = '#2563eb';
+          "
+          >🏷️ {{ discount.cat.name }}</a
+        >
+        {% else %}
+        <div
+          style="
+            display: inline-block;
+            background: #e2e8f0;
+            color: #64748b;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+          "
+        >
+          🏷️ Без категории
+        </div>
+        {% endif %}
+
+        <!-- Теги дисконта -->
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px"
+        >
+          {% for tag in discount.tags.all %}
+          <a
+            href="{% if current_category %}{% url 'category_tag_discounts' current_category.slug tag.slug %}{% else %}{% url 'tag_discounts' tag.slug %}{% endif %}"
+            style="
+              background: #f0f0f0;
+              color: #666;
+              padding: 3px 10px;
+              border-radius: 15px;
+              text-decoration: none;
+              font-size: 0.7rem;
+            "
+            >#{{ tag.tag }}</a
+          >
+          {% endfor %}
+        </div>
+
+        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 12px">
+          📅 {{ discount.valid_from|date:"d.m.Y" }} — {{
+          discount.valid_to|date:"d.m.Y" }}
+        </div>
+
+        <p style="color: #475569; line-height: 1.5; margin-bottom: 20px">
+          {{ discount.description|truncatewords:20 }}
+        </p>
+
+        <a
+          href="{{ discount.get_absolute_url }}"
+          style="
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+          "
+          >Подробнее →</a
+        >
+      </div>
+      {% empty %}
+      <p style="grid-column: 1/-1; text-align: center; padding: 50px">
+        Нет дисконтов по выбранным фильтрам.
+      </p>
+      {% endfor %}
+    </div>
+
+    <style>
+      @media (max-width: 1200px) {
+        div[style*="grid-template-columns: repeat(4, 1fr)"] {
+          grid-template-columns: repeat(3, 1fr) !important;
+        }
+      }
+      @media (max-width: 768px) {
+        div[style*="grid-template-columns: repeat(4, 1fr)"] {
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+      }
+      @media (max-width: 576px) {
+        div[style*="grid-template-columns: repeat(4, 1fr)"] {
+          grid-template-columns: 1fr !important;
+        }
+      }
+    </style>
+  </div>
+</main>
+{% endblock %}

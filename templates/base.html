@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title|default:"DiscountPRO" }}</title>
+    <link rel="stylesheet" href="{% static 'DiscPro/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-content">
+                <a href="{% url 'home' %}" class="logo">Discount<span>PRO</span></a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="{% url 'home' %}" class="nav-link">Главная</a></li>
+                    <li><a href="{% url 'about' %}" class="nav-link">О проекте</a></li>
+                    <li><a href="{% url 'benefits' %}" class="nav-link">Выгоды</a></li>
+                    <li><a href="{% url 'trust' %}" class="nav-link">Доверие</a></li>
+                    <li><a href="{% url 'discount_list' %}" class="nav-link">Дисконты</a></li>
+                    <li><a href="{% url 'addpage' %}" class="nav-link">Добавить акцию</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link">Контакты</a></li>
+                    <li><a href="{% url 'upload' %}" class="nav-link">Загрузка файлов</a></li>
+                    <li><a href="{% url 'contact' %}" class="btn btn-small">Оставить заявку</a></li>
+                    
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="{% url 'home' %}" class="logo">Discount<span>PRO</span></a>
+                </div>
+                <div class="footer-nav">
+                    <a href="{% url 'home' %}" class="footer-link">Главная</a>
+                    <a href="{% url 'about' %}" class="footer-link">О проекте</a>
+                    <a href="{% url 'benefits' %}" class="footer-link">Выгоды</a>
+                    <a href="{% url 'trust' %}" class="footer-link">Доверие</a>
+                    <a href="{% url 'discount_list' %}" class="footer-link">Дисконты</a>
+                    <a href="{% url 'contact' %}" class="footer-link">Контакты</a>
+                </div>
+                <div class="footer-info">
+                    <p class="copyright">© 2026 DiscountPro. | Каринцев Роман</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'DiscPro/js/script.js' %}"></script>
+</body>
+</html>

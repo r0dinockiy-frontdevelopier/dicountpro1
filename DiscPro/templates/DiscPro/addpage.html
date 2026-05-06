@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main style="padding-top: 100px;">
+    <div class="container">
+        <h1>{{ title }}</h1>
+        
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-error">{{ form.non_field_errors }}</div>
+            
+            {% for f in form %}
+                <div style="margin-bottom: 15px;">
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>
+                    {{ f }}
+                    <div class="form-error" style="color: red; font-size: 0.8rem;">{{ f.errors }}</div>
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary">Добавить акцию</button>
+        </form>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main style="padding-top: 100px;">
+    <div class="container">
+        <div class="discount-detail">
+            <a href="{% url 'discount_list' %}" class="back-link">← Назад ко всем акциям</a>
+             {% if post.photo %}
+            <div style="margin-bottom: 20px;">
+                <img src="{{ post.photo.url }}" alt="{{ post.title }}" style="max-width: 100%; border-radius: 16px;">
+            </div>
+        {% endif %}
+            <div class="discount-detail-header">
+                <h1>{{ post.title }}</h1>
+                <div class="discount-detail-percent">-{{ post.discount_percent }}%</div>
+            </div>
+            
+            <div class="discount-detail-meta">
+                <p>📅 {{ post.valid_from|date:"d.m.Y" }} — {{ post.valid_to|date:"d.m.Y" }}</p>
+            </div>
+            
+            <div class="discount-detail-content">
+                <h3>Описание акции</h3>
+                <p>{{ post.description|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

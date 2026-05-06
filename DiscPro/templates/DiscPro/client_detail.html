@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main style="padding-top: 100px;">
+    <div class="container">
+        <h1>{{ client.user.username|default:"Клиент" }}</h1>
+        
+        <div style="background: #f8fafc; border-radius: 16px; padding: 20px; margin-bottom: 30px;">
+            <h3>Информация о клиенте</h3>
+            <p>Телефон: {{ client.phone }}</p>
+            <p>Адрес: {{ client.address|default:"Не указан" }}</p>
+            <p>Номер карты: {{ client.discount_card_number|default:"Нет" }}</p>
+            <p>Сумма покупок: {{ client.total_purchases }} руб.</p>
+            <p>Дата регистрации: {{ client.registration_date|date:"d.m.Y" }}</p>
+            
+            {% if client.profile %}
+                <hr>
+                <h4>Профиль лояльности</h4>
+                <p>Уровень: {{ client.profile.loyalty_level }}</p>
+                <p>Бонусные баллы: {{ client.profile.bonus_points }}</p>
+                <p>Персональная скидка: {{ client.profile.personal_discount }}%</p>
+            {% endif %}
+        </div>
+        
+        <h3>История использования дисконтов</h3>
+        {% if usages %}
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr><th>Дисконт</th><th>Дата</th><th>Сумма</th><th>Сэкономлено</th></tr>
+                </thead>
+                <tbody>
+                    {% for usage in usages %}
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td>{{ usage.discount.title }}</td>
+                            <td>{{ usage.used_at|date:"d.m.Y H:i" }}</td>
+                            <td>{{ usage.purchase_amount }} руб.</td>
+                            <td style="color: green;">{{ usage.saved_amount }} руб.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Нет использований дисконтов.</p>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,53 @@
+#header {
+    background: #1e293b;
+    color: white;
+}
+
+#header a {
+    color: white;
+}
+
+#header a:hover {
+    color: #60a5fa;
+}
+
+.module caption, .module h2, .inline-group h2 {
+    background: #2563eb;
+    color: white;
+}
+
+div.breadcrumbs {
+    background: #334155;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #2563eb;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #1d4ed8;
+}
+
+.object-tools a:link, .object-tools a:visited {
+    background: #2563eb;
+}
+
+#changelist-filter .selected {
+    color: #2563eb !important;
+}
+
+#changelist-filter a:hover {
+    color: #2563eb;
+}
+
+.paginator .this-page {
+    background: #2563eb;
+}
+
+.datetimeshortcuts .clock-icon {
+    background: none !important;
+}
+
+.selector-chosen h2 {
+    background: #b91c1c !important;
+}

@@ -1,0 +1,13 @@
+<div class="two-column-grid">
+    {% for benefit in benefits %}
+    <div class="benefit-item">
+        <div class="benefit-item-icon">
+            <i class="{{ benefit.icon }}"></i>
+        </div>
+        <div class="benefit-item-content">
+            <h3 class="benefit-item-title">{{ benefit.title }}</h3>
+            <p class="benefit-item-text">{{ benefit.text }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>

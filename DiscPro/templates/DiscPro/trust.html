@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Доверие | DiscountPRO{% endblock %}
+
+{% block content %}
+<section class="section trust" id="trust">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Нам доверяют тысячи компаний</h2>
+            <p class="section-subtitle">Присоединяйтесь к успешным предприятиям, которые уже используют DiscountPro</p>
+        </div>
+        
+        <!-- Статистика -->
+        <div class="trust-stats">
+            <div class="trust-stat">
+                <span class="trust-number">5000+</span>
+                <span class="trust-label">Активных пользователей</span>
+            </div>
+            <div class="trust-stat">
+                <span class="trust-number">+35%</span>
+                <span class="trust-label">Средний рост выручки</span>
+            </div>
+            <div class="trust-stat">
+                <span class="trust-number">98%</span>
+                <span class="trust-label">Уровень удовлетворённости</span>
+            </div>
+        </div>
+        
+        <!-- Блок с отзывами -->
+        {% if testimonials %}
+            <h3 style="text-align: center; margin: 40px 0 20px;">Отзывы наших клиентов</h3>
+            <div class="testimonials">
+                {% for t in testimonials %}
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <p>"{{ t.text }}"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">{{ t.initials }}</div>
+                            <div class="author-info">
+                                <h4 class="author-name">{{ t.author }}</h4>
+                                <p class="author-position">{{ t.position }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 40px; background: #f8fafc; border-radius: 16px; margin: 30px 0;">
+                <i class="fas fa-comments" style="font-size: 48px; color: #94a3b8; margin-bottom: 15px;"></i>
+                <p style="color: #64748b;">Отзывы скоро появятся. Станьте первым!</p>
+            </div>
+        {% endif %}
+        
+        <!-- CTA блок -->
+        <div class="cta-block" style="background: linear-gradient(-45deg, rgba(111, 41, 243, 0.7) 50%, rgba(29, 78, 216, 0.4) 100%), url('{% static 'DiscPro/images/prisoedinyates_k_nam.png' %}') center/cover no-repeat;">
+            <div class="cta-overlay" style="display: none;"></div>
+            <div class="cta-content">
+                <h2 class="cta-title">Присоединяйтесь к лидерам рынка</h2>
+                <p class="cta-text">Более 5000 компаний в России и СНГ доверяют управление своими дисконтными программами DiscountPro</p>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'contact' %}" class="btn btn-primary btn-large">Перейти в личный кабинет</a>
+                {% else %}
+                    <a href="{% url 'contact' %}" class="btn btn-primary btn-large">Начать оптимизировать свои скидки сегодня</a>
+                {% endif %}
+                
+                <p class="cta-note">Оставьте заявку, и наш специалист свяжется с вами в течение 15 минут</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
